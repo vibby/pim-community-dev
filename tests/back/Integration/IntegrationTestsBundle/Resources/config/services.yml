@@ -39,6 +39,7 @@ services:
             - '%env(APP_DATABASE_NAME)%'
             - '%env(APP_DATABASE_USER)%'
             - '%env(APP_DATABASE_PASSWORD)%'
+            - '%index_hosts%'
 
     akeneo_integration_tests.loader.database_schema_handler:
         class: '%akeneo_integration_tests.loader.database_schema_handler.class%'
