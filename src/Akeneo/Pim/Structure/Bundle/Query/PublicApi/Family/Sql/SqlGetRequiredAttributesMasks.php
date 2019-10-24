@@ -35,7 +35,6 @@ SELECT
     family.code AS family_code,
     channel_code,
     locale_code,
-    JSON_ARRAYAGG(
         CONCAT(
             IF(
                 attribute.attribute_type = 'pim_catalog_price_collection',
@@ -57,7 +56,7 @@ SELECT
             IF(attribute.is_scopable, channel_locale.channel_code, '<all_channels>'),
             '-',
             IF(attribute.is_localizable, channel_locale.locale_code, '<all_locales>')
-        )
+
     ) AS mask
 FROM pim_catalog_family family
 JOIN pim_catalog_attribute_requirement pcar ON family.id = pcar.family_id
@@ -77,7 +76,6 @@ WHERE
     pcar.required is true
     AND (pcal.locale_id IS NULL OR pcal.locale_id = channel_locale.locale_id)
     AND family.code IN (:familyCodes)
-GROUP BY family.code, channel_code, locale_code
 SQL;
 
         $rows = $this->connection->executeQuery(
@@ -85,6 +83,21 @@ SQL;
             ['familyCodes' => $familyCodes],
             ['familyCodes' => Connection::PARAM_STR_ARRAY]
         )->fetchAll();
+
+        $aggregatedRows = [];
+        foreach ($rows as $row) {
+            $key = $row['family_code']. '-' . $row['channel_code'] . '-' . $row['locale_code'];
+            if (!isset($aggregatedRows[$key])) {
+                $aggregatedRows[$key] = [
+                    'family_code' => $row['family_code'],
+                    'channel_code' => $row['channel_code'],
+                    'locale_code' => $row['locale_code'],
+                    'mask' => []
+                ];
+            }
+            $aggregatedRows[$key]['mask'][] = $row['mask'];
+        }
+        $rows = array_values($aggregatedRows);
 
         $families = array_map(function (array $row): string {
             return $row['family_code'];
@@ -100,7 +113,7 @@ SQL;
             $masksPerFamily[$masksPerChannelAndLocale['family_code']][] = new RequiredAttributesMaskForChannelAndLocale(
                 (string) $masksPerChannelAndLocale['channel_code'],
                 (string) $masksPerChannelAndLocale['locale_code'],
-                json_decode($masksPerChannelAndLocale['mask'], true)
+                $masksPerChannelAndLocale['mask']
             );
         }
 
