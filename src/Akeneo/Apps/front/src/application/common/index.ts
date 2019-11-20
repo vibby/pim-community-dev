@@ -11,6 +11,7 @@ import {Page} from './components/Page';
 import {PageHeader} from './components/PageHeader';
 import {Section} from './components/Section';
 import {Select2} from './components/Select2';
+import {SmallHelper} from './components/SmallHelper';
 
 export {
     ApplyButton,
@@ -30,4 +31,5 @@ export {
     PageHeader,
     Section,
     Select2,
+    SmallHelper,
 };

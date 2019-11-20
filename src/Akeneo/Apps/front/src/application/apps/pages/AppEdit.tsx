@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {useHistory, useParams} from 'react-router';
 import {App} from '../../../domain/apps/app.interface';
+import {AppCredentials as AppCredentialsInterface} from '../../../domain/apps/app-credentials.interface';
 import {FlowType} from '../../../domain/apps/flow-type.enum';
 import {PimView} from '../../../infrastructure/pim-view/PimView';
 import {ApplyButton, Breadcrumb, BreadcrumbItem, Page, PageHeader} from '../../common';
@@ -10,6 +11,7 @@ import {BreadcrumbRouterLink, useRoute} from '../../shared/router';
 import {Translate} from '../../shared/translate';
 import {AppEditForm} from '../components/AppEditForm';
 import imgUrl from '../../common/assets/illustrations/api.svg';
+import {AppCredentials} from "../components/AppCredentials";
 
 export const AppEdit = () => {
     const history = useHistory();
@@ -18,7 +20,7 @@ export const AppEdit = () => {
     const [formState, setFormState] = useState({hasUnsavedChanges: false, isValid: false});
 
     const {code} = useParams() as {code: string};
-    const result = useFetch<{code: string; label: string; flow_type: FlowType}>(
+    const result = useFetch<{code: string; label: string; flow_type: FlowType, secret: string, client_id: string}>(
         useRoute('akeneo_apps_get_rest', {code})
     );
     if (isErr(result)) {
@@ -32,6 +34,11 @@ export const AppEdit = () => {
         code: result.data.code,
         label: result.data.label,
         flowType: result.data.flow_type,
+    };
+    const appCredentials: AppCredentialsInterface = {
+        code: result.data.code,
+        secret: result.data.secret,
+        clientId: result.data.client_id,
     };
 
     const handleSave = () => formRef.current && formRef.current.submit();
@@ -87,6 +94,7 @@ export const AppEdit = () => {
                 {app.label}
             </PageHeader>
 
+            <AppCredentials appCredentials={appCredentials} />
             <AppEditForm ref={formRef} app={app} onChange={handleChange} />
         </Page>
     );
