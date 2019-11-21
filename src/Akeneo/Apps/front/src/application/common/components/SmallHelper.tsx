@@ -14,6 +14,7 @@ const HintIcon = styled.div`
     background-position: center;
     background-repeat: no-repeat;
     background-size: 20px;
+    flex-shrink: 0;
     height: 20px;
     margin: 12px;
     width: 20px;
@@ -24,6 +25,8 @@ const HintTitle = styled.div`
     flex-grow: 1;
     font-weight: 600;
     padding-left: 16px;
+    margin: 10px 0;
+    margin-right: 10px;
 `;
 
 export const SmallHelper = ({children}: {children: ReactNode}) => (

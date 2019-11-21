@@ -96,7 +96,7 @@ export const AppEditForm = forwardRef(({app, onChange}: Props, ref: Ref<{submit:
 
             <br />
 
-            <Form ref={formRef}>
+            <Form ref={formRef} className='AknFormContainer--wide'>
                 <FormGroup controlId='code' label='pim_apps.app.code'>
                     <FormInput type='text' defaultValue={app.code} disabled />
                 </FormGroup>

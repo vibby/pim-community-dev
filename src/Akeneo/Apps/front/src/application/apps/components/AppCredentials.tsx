@@ -3,6 +3,8 @@ import {AppCredentials as AppCredentialsInterface} from '../../../domain/apps/ap
 import {Section, SmallHelper} from '../../common';
 import {Translate} from '../../shared/translate';
 import {CredentialList, CredentialListItem} from './CredentialList';
+import {UpdateIcon, DuplicateIcon} from '../../common/icons';
+import {IconButton} from '../../common';
 
 interface Props {
     appCredentials: AppCredentialsInterface;
@@ -11,21 +13,31 @@ interface Props {
 export const AppCredentials = ({appCredentials}: Props) => {
     return (
         <>
-            <Section title={<Translate id='pim_apps.app_credentials.subtitle' />} />
+            <Section title={<Translate id='akeneo_apps.edit_app.credentials.title' />} />
             <div>
-                <SmallHelper>Lorem ipsum</SmallHelper>
+                <SmallHelper>
+                    <Translate id='akeneo_apps.edit_app.credentials.helper' />
+                </SmallHelper>
             </div>
 
             <CredentialList>
                 <CredentialListItem
-                    label={<Translate id='pim_apps.app_credentials.client_id' />}
-                    action={<button>🔄</button>}
+                    label={<Translate id='akeneo_apps.app.client_id' />}
+                    action={
+                        <IconButton>
+                            <UpdateIcon />
+                        </IconButton>
+                    }
                 >
                     {appCredentials.clientId}
                 </CredentialListItem>
                 <CredentialListItem
-                    label={<Translate id='pim_apps.app_credentials.secret' />}
-                    action={<button>🔄</button>}
+                    label={<Translate id='akeneo_apps.app.secret' />}
+                    action={
+                        <IconButton>
+                            <DuplicateIcon />
+                        </IconButton>
+                    }
                 >
                     {appCredentials.secret}
                 </CredentialListItem>

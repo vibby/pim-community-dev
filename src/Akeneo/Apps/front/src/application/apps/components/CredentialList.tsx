@@ -4,7 +4,7 @@ import {PropsWithTheme} from '../../common/theme';
 
 export const CredentialList = styled.div`
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: repeat(3, auto);
 `;
 
 export const CredentialListItem = ({
@@ -38,9 +38,13 @@ const LabelColumn = styled(Column)`
 
 const ValueColumn = styled(Column)`
     color: ${({theme}: PropsWithTheme) => theme.color.darkBlue};
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 const ActionColumn = styled(Column)`
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
     padding-right: 20px;
-    text-align: right;
 `;

@@ -12,6 +12,7 @@ import {BreadcrumbRouterLink, useRoute} from '../../shared/router';
 import {Translate} from '../../shared/translate';
 import {AppCredentials} from '../components/AppCredentials';
 import {AppEditForm} from '../components/AppEditForm';
+import styled from 'styled-components';
 
 export const AppEdit = () => {
     const history = useHistory();
@@ -95,8 +96,20 @@ export const AppEdit = () => {
                 {app.label}
             </PageHeader>
 
-            <AppCredentials appCredentials={appCredentials} />
-            <AppEditForm ref={formRef} app={app} onChange={handleChange} />
+            <Layout>
+                <div>
+                    <AppEditForm ref={formRef} app={app} onChange={handleChange} />
+                </div>
+                <div>
+                    <AppCredentials appCredentials={appCredentials} />
+                </div>
+            </Layout>
         </Page>
     );
 };
+
+const Layout = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 40px;
+`;

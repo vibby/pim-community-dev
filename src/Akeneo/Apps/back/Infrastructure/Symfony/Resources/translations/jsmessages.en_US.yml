@@ -44,6 +44,8 @@ pim_apps:
 
 akeneo_apps:
     app:
+        client_id: Client ID
+        secret: Secret
         constraint:
             code:
                 required: App code is required.
@@ -55,3 +57,8 @@ akeneo_apps:
                 too_long: App label is too long. It should have 100 characters or less.
             flow_type:
                 invalid: App flow type can only be 'data_source', 'data_destination' or 'other'.
+    edit_app:
+        credentials:
+            title: Credentials
+            helper: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+        
