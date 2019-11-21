@@ -1,17 +1,17 @@
 import React, {useRef, useState} from 'react';
 import {useHistory, useParams} from 'react-router';
-import {App} from '../../../domain/apps/app.interface';
 import {AppCredentials as AppCredentialsInterface} from '../../../domain/apps/app-credentials.interface';
+import {App} from '../../../domain/apps/app.interface';
 import {FlowType} from '../../../domain/apps/flow-type.enum';
 import {PimView} from '../../../infrastructure/pim-view/PimView';
 import {ApplyButton, Breadcrumb, BreadcrumbItem, Page, PageHeader} from '../../common';
+import imgUrl from '../../common/assets/illustrations/api.svg';
 import {useFetch} from '../../shared/fetch';
 import {isErr} from '../../shared/fetch/result';
 import {BreadcrumbRouterLink, useRoute} from '../../shared/router';
 import {Translate} from '../../shared/translate';
+import {AppCredentials} from '../components/AppCredentials';
 import {AppEditForm} from '../components/AppEditForm';
-import imgUrl from '../../common/assets/illustrations/api.svg';
-import {AppCredentials} from "../components/AppCredentials";
 
 export const AppEdit = () => {
     const history = useHistory();
@@ -20,7 +20,7 @@ export const AppEdit = () => {
     const [formState, setFormState] = useState({hasUnsavedChanges: false, isValid: false});
 
     const {code} = useParams() as {code: string};
-    const result = useFetch<{code: string; label: string; flow_type: FlowType, secret: string, client_id: string}>(
+    const result = useFetch<{code: string; label: string; flow_type: FlowType; secret: string; client_id: string}>(
         useRoute('akeneo_apps_get_rest', {code})
     );
     if (isErr(result)) {
@@ -30,6 +30,7 @@ export const AppEdit = () => {
     if (undefined === result.data) {
         return <></>;
     }
+
     const app: App = {
         code: result.data.code,
         label: result.data.label,

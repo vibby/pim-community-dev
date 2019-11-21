@@ -1,29 +1,34 @@
 import React, {ReactNode} from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 import iconUrl from '../assets/icons/info.svg';
-
-const HintIcon = styled.div`
-    border-right: 1px #D9DDE2 solid;
-    min-width: 65px;
-    margin-right: 16px;
-    min-height: 44px;
-    background-image: url(${iconUrl});
-`;
+import {PropsWithTheme} from '../theme';
 
 const SubsectionHint = styled.div`
-    background: #F5F9FC;
-    display: flex;
-    padding: 5px 20px 5px 5px;
-    font-size: 13px;
-    color: #67768A;
     align-items: center;
+    background: ${({theme}: PropsWithTheme) => theme.color.blue10};
+    display: flex;
 `;
 
-export const SmallHelper = ({ children }: {children: ReactNode}) => (
-    <div className="AknSubsection">
-        <SubsectionHint>
-            <HintIcon className=" AknIconButton AknIconButton--info"></HintIcon>
-            <div className="AknSubsection-hintTitle">{ children }</div>
-        </SubsectionHint>
-    </div>
+const HintIcon = styled.div`
+    background-image: url(${iconUrl});
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    height: 20px;
+    margin: 12px;
+    width: 20px;
+`;
+
+const HintTitle = styled.div`
+    border-left: 1px solid ${({theme}: PropsWithTheme) => theme.color.mediumGrey};
+    flex-grow: 1;
+    font-weight: 600;
+    padding-left: 16px;
+`;
+
+export const SmallHelper = ({children}: {children: ReactNode}) => (
+    <SubsectionHint className='AknSubsection'>
+        <HintIcon />
+        <HintTitle>{children}</HintTitle>
+    </SubsectionHint>
 );

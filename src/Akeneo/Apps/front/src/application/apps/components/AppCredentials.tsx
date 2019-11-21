@@ -1,8 +1,8 @@
 import React from 'react';
+import {AppCredentials as AppCredentialsInterface} from '../../../domain/apps/app-credentials.interface';
+import {Section, SmallHelper} from '../../common';
 import {Translate} from '../../shared/translate';
-import {Section, SmallHelper} from "../../common";
-import {ListItem} from "./ListItem";
-import {AppCredentials as AppCredentialsInterface} from "../../../domain/apps/app-credentials.interface";
+import {CredentialList, CredentialListItem} from './CredentialList';
 
 interface Props {
     appCredentials: AppCredentialsInterface;
@@ -16,15 +16,20 @@ export const AppCredentials = ({appCredentials}: Props) => {
                 <SmallHelper>Lorem ipsum</SmallHelper>
             </div>
 
-            <table>
-                <ListItem label={<Translate id='pim_apps.app_credentials.client_id' />}>
-                    { appCredentials.clientId }
-                </ListItem>
-                <ListItem label={<Translate id='pim_apps.app_credentials.secret' />}>
-                    { appCredentials.secret }
-                </ListItem>
-            </table>
-
+            <CredentialList>
+                <CredentialListItem
+                    label={<Translate id='pim_apps.app_credentials.client_id' />}
+                    action={<button>🔄</button>}
+                >
+                    {appCredentials.clientId}
+                </CredentialListItem>
+                <CredentialListItem
+                    label={<Translate id='pim_apps.app_credentials.secret' />}
+                    action={<button>🔄</button>}
+                >
+                    {appCredentials.secret}
+                </CredentialListItem>
+            </CredentialList>
         </>
-    )
+    );
 };
