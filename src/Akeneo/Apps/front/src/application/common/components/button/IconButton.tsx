@@ -16,6 +16,10 @@ export const IconButton = styled.button`
         opacity: 1;
     }
 
+    :focus {
+        outline: none;
+    }
+
     svg {
         width: 18px;
         height: 18px;

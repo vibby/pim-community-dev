@@ -38,7 +38,6 @@ export const AppEdit = () => {
         flowType: result.data.flow_type,
     };
     const appCredentials: AppCredentialsInterface = {
-        code: result.data.code,
         secret: result.data.secret,
         clientId: result.data.client_id,
     };
@@ -101,7 +100,7 @@ export const AppEdit = () => {
                     <AppEditForm ref={formRef} app={app} onChange={handleChange} />
                 </div>
                 <div>
-                    <AppCredentials appCredentials={appCredentials} />
+                    <AppCredentials code={app.code} appCredentials={appCredentials} />
                 </div>
             </Layout>
         </Page>
